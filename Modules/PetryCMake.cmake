@@ -2,4 +2,4 @@
 
 include_guard()
 
-message("PetryCMake: Hello world!")
+include(PetryBuildType)
