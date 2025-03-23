@@ -3,3 +3,4 @@
 include_guard()
 
 include(PetryBuildType)
+include(PetryCompilerWarnings)
