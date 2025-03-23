@@ -1,0 +1,46 @@
+# Build artifacts
+copyright
+install-config
+
+# CMake
+CMakeUserPresets.json
+CMake
+.cmake
+CMakeFiles/
+CMakeScripts/
+CMakeCache.txt
+cmake_install.cmake
+cmake_uninstall.cmake
+install_manifest.txt
+*Config.cmake
+*ConfigVersion.cmake
+CTestTestfile.cmake
+Testing
+compile_commands.json
+.cache/
+/Makefile
+.ninja_*
+*.ninja
+_deps
+
+# CLion
+.idea
+cmake-build-*
+
+# VSCode
+.vscode/
+build/
+
+# Visual Studio
+.vs
+out/
+Debug/
+Release/
+MinSizeRel/
+RelWithDebInfo/
+
+# for Xcode
+.DS_Store
+xcuserdata/
+*.xcodeproj
+*.pbxproj
