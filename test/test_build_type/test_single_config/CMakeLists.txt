@@ -19,6 +19,7 @@ endif()
 find_package(petrycmake CONFIG REQUIRED)
 include(PetryBuildType)
 
+unset(CMAKE_BUILD_TYPE CACHE)
 petry_set_default_build_type("${DEFAULT_CONFIGURATION}")
 
 if(NOT DEFAULT_CONFIGURATION STREQUAL CMAKE_BUILD_TYPE)
