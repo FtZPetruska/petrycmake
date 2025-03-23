@@ -11,7 +11,7 @@ project(petrycmake
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-option(BUILD_TESTING "Build tests" ON)
+option(BUILD_TESTING "Build tests" ${PROJECT_IS_TOP_LEVEL})
 
 set(PETRYCMAKE_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/petrycmake"
   CACHE STRING "Install directory for the CMake package, relative to the install prefix."
