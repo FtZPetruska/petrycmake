@@ -12,8 +12,8 @@ CMakeCache.txt
 cmake_install.cmake
 cmake_uninstall.cmake
 install_manifest.txt
-*Config.cmake
-*ConfigVersion.cmake
+petrycmakeConfig.cmake
+petrycmakeConfigVersion.cmake
 CTestTestfile.cmake
 Testing
 compile_commands.json

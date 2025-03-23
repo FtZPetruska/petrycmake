@@ -11,12 +11,13 @@ foreach(BUILD_CONFIG Debug Release MinSizeRel RelWithDebInfo)
     NAME "test_single_config_${CONFIG_NAME}"
     COMMAND "${CMAKE_CTEST_COMMAND}"
     "--build-and-test"
-      "${CMAKE_CURRENT_SOURCE_DIR}/test_single_config"
+      "${PETRYCMAKE_TEST_COMMON_ROOT}"
       "${CMAKE_CURRENT_BINARY_DIR}/test_single_config_${CONFIG_NAME}"
     "--build-generator" "Ninja"
     "--build-makeprogram" "${NINJA_EXECUTABLE}"
     "--build-options" 
       "-D" "DEFAULT_CONFIGURATION=${BUILD_CONFIG}"
+      "-D" "PETRYCMAKE_TEST_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/test_single_config.cmake"
       "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
     COMMAND_EXPAND_LISTS
   )
@@ -25,12 +26,13 @@ foreach(BUILD_CONFIG Debug Release MinSizeRel RelWithDebInfo)
     NAME "test_single_config_preset_${CONFIG_NAME}"
     COMMAND "${CMAKE_CTEST_COMMAND}"
     "--build-and-test"
-      "${CMAKE_CURRENT_SOURCE_DIR}/test_single_config_preset"
+      "${PETRYCMAKE_TEST_COMMON_ROOT}"
       "${CMAKE_CURRENT_BINARY_DIR}/test_single_config_preset_${CONFIG_NAME}"
     "--build-generator" "Ninja"
     "--build-makeprogram" "${NINJA_EXECUTABLE}"
     "--build-options"
       "-D" "CMAKE_BUILD_TYPE=${BUILD_CONFIG}"
+      "-D" "PETRYCMAKE_TEST_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/test_single_config_preset.cmake"
       "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
     COMMAND_EXPAND_LISTS
   )
@@ -39,12 +41,13 @@ foreach(BUILD_CONFIG Debug Release MinSizeRel RelWithDebInfo)
     NAME test_multi_config_${CONFIG_NAME}
     COMMAND "${CMAKE_CTEST_COMMAND}"
     "--build-and-test"
-      "${CMAKE_CURRENT_SOURCE_DIR}/test_multi_config"
+      "${PETRYCMAKE_TEST_COMMON_ROOT}"
       "${CMAKE_CURRENT_BINARY_DIR}/test_multi_config_${CONFIG_NAME}"
     "--build-generator" "Ninja Multi-Config"
     "--build-makeprogram" "${NINJA_EXECUTABLE}"
     "--build-options"
       "-D" "DEFAULT_CONFIGURATION=${BUILD_CONFIG}"
+      "-D" "PETRYCMAKE_TEST_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/test_multi_config.cmake"
       ${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}
     COMMAND_EXPAND_LISTS
   )
@@ -63,11 +66,13 @@ add_test(
   NAME test_bad_config
   COMMAND "${CMAKE_CTEST_COMMAND}"
   "--build-and-test"
-    "${CMAKE_CURRENT_SOURCE_DIR}/test_bad_config"
+    "${PETRYCMAKE_TEST_COMMON_ROOT}"
     "${CMAKE_CURRENT_BINARY_DIR}/test_bad_config"
   "--build-generator" "${CMAKE_GENERATOR}"
   "--build-makeprogram" "${CMAKE_MAKE_PROGRAM}"
-  "--build-options" "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
+  "--build-options"
+    "-D" "PETRYCMAKE_TEST_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/test_bad_config.cmake"
+    "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
   COMMAND_EXPAND_LISTS
 )
 

@@ -1,16 +1,20 @@
 # SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.31)
-project(test_compiler_warnings LANGUAGES C CXX)
+add_test(
+  NAME test_compiler_warnings
+  COMMAND "${CMAKE_CTEST_COMMAND}"
+    "--build-and-test"
+      "${PETRYCMAKE_TEST_COMMON_ROOT}"
+      "${CMAKE_CURRENT_BINARY_DIR}/test_compiler_warnings"
+    "--build-generator" "${CMAKE_GENERATOR}"
+    "--build-makeprogram" "${CMAKE_MAKE_PROGRAM}"
+    "--build-options"
+      "-D" "PETRYCMAKE_TEST_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/test_compiler_warnings.cmake"
+      "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
+    COMMAND_EXPAND_LISTS
+)
 
-find_package(petrycmake)
-include(PetryCompilerWarnings)
-
-add_executable(my_program main.cpp foo.c foo.h)
-
-petry_set_target_warnings(my_program)
-
-set_target_properties(my_program
+set_tests_properties(test_compiler_warnings
   PROPERTIES
-    COMPILE_WARNING_AS_ERROR TRUE
+    LABELS PetryCompilerWarnings
 )

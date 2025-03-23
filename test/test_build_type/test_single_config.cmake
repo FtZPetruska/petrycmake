@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.31)
-project(test_single_config)
+include(PetryBuildType)
 
 get_property(IS_MULTI_CONFIG
   GLOBAL
@@ -15,9 +14,6 @@ endif()
 if(NOT DEFAULT_CONFIGURATION)
   message(FATAL_ERROR "DEFAULT_CONFIGURATION must be set for this test")
 endif()
-
-find_package(petrycmake CONFIG REQUIRED)
-include(PetryBuildType)
 
 unset(CMAKE_BUILD_TYPE CACHE)
 petry_set_default_build_type("${DEFAULT_CONFIGURATION}")

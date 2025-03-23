@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.31)
-project(test_single_config_preset)
+include(PetryBuildType)
 
 get_property(IS_MULTI_CONFIG
   GLOBAL
@@ -11,9 +10,6 @@ get_property(IS_MULTI_CONFIG
 if(IS_MULTI_CONFIG)
   message(FATAL_ERROR "Cannot run single-config test on a multi-config generator")
 endif()
-
-find_package(petrycmake CONFIG REQUIRED)
-include(PetryBuildType)
 
 set(INITIAL_CONFIG "${CMAKE_BUILD_TYPE}")
 if(INITIAL_CONFIG STREQUAL Release)
