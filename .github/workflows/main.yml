@@ -1,0 +1,76 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: "${{ matrix.config.name }}"
+    runs-on: ${{ matrix.config.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.config.shell }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: "MSVC", os: windows-latest, shell: bash }
+          - {
+              name: "MSYS2 UCRT64",
+              os: windows-latest,
+              shell: "msys2 {0}",
+              msystem: ucrt64,
+              msys-env: mingw-w64-ucrt-x86_64
+            }
+          - { name: "Linux", os: ubuntu-latest, shell: bash }
+          - { name: "macOS", os: macos-latest, shell: bash }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dependencies (MSVC)
+        if: matrix.config.name == 'MSVC'
+        run: |
+          choco install ninja
+
+      - name: Install Dependencies (MSYS2)
+        if: matrix.config.shell == 'msys2 {0}'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.config.msystem }}
+          install: >-
+            ${{ matrix.config.msys-env }}-toolchain
+            ${{ matrix.config.msys-env }}-cmake
+            ${{ matrix.config.msys-env }}-ninja
+
+      - name: Install Dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade -y
+          sudo apt-get install -y \
+            gcc \
+            cmake \
+            ninja-build
+
+      - name: Install Dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install ninja
+
+      - name: Configure
+        run: |
+          cmake \
+            -S . \
+            -B build \
+            -D CMAKE_BUILD_TYPE=Release \
+            -D CMAKE_INSTALL_PREFIX=$(pwd)/install-prefix \
+            -G Ninja
+
+      - name: Build
+        run: cmake --build build --config Release --verbose
+
+      - name: Run tests
+        run: ctest --test-dir build -C Release --parallel
+
+      - name: Install
+        run: cmake --install build --config Release
