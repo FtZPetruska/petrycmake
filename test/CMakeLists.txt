@@ -7,10 +7,13 @@ set(PETRYCMAKE_TEST_COMMON_CONFIG_ARGS
 
 add_test(
   NAME test_find_package
-  COMMAND "${CMAKE_COMMAND}"
-    "-S" "${CMAKE_CURRENT_SOURCE_DIR}/test_find_package"
-    "-B" "${CMAKE_CURRENT_BINARY_DIR}/test_find_package"
-    "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
+  COMMAND "${CMAKE_CTEST_COMMAND}"
+    "--build-and-test"
+      "${CMAKE_CURRENT_SOURCE_DIR}/test_find_package"
+      "${CMAKE_CURRENT_BINARY_DIR}/test_find_package"
+    "--build-generator" "${CMAKE_GENERATOR}"
+    "--build-makeprogram" "${CMAKE_MAKE_PROGRAM}"
+    "--build-options" "${PETRYCMAKE_TEST_COMMON_CONFIG_ARGS}"
     COMMAND_EXPAND_LISTS
 )
 
