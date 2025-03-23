@@ -62,9 +62,9 @@ jobs:
           cmake \
             -S . \
             -B build \
+            -G Ninja \
             -D CMAKE_BUILD_TYPE=Release \
-            -D CMAKE_INSTALL_PREFIX=$(pwd)/install-prefix \
-            -G Ninja
+            -D CMAKE_INSTALL_PREFIX=install-prefix
 
       - name: Build
         run: cmake --build build --config Release --verbose
@@ -74,3 +74,12 @@ jobs:
 
       - name: Install
         run: cmake --install build --config Release
+
+      - name: Test using the install
+        run: |
+          cmake \
+            -S test/test_find_package \
+            -B test_find_package_build \
+            -G Ninja \
+            -D CMAKE_BUILD_TYPE=Release \
+            -D petrycmake_DIR=install-prefix
