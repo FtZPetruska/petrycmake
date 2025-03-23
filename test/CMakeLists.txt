@@ -18,5 +18,26 @@ add_test(
     COMMAND_EXPAND_LISTS
 )
 
+add_test(
+  NAME test_fetch_content
+  COMMAND "${CMAKE_CTEST_COMMAND}"
+    "--build-and-test"
+      "${CMAKE_CURRENT_SOURCE_DIR}/test_fetch_content"
+      "${CMAKE_CURRENT_BINARY_DIR}/test_fetch_content"
+    "--build-generator" "${CMAKE_GENERATOR}"
+    "--build-makeprogram" "${CMAKE_MAKE_PROGRAM}"
+    "--build-options"
+      "--fresh"
+      "-DPETRYCMAKE_REPOSITORY=${PROJECT_SOURCE_DIR}"
+    COMMAND_EXPAND_LISTS
+)
+
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/.git")
+  set_tests_properties(test_fetch_content
+    PROPERTIES
+      DISABLED TRUE
+  )
+endif()
+
 add_subdirectory(test_build_type)
 add_subdirectory(test_compiler_warnings)
