@@ -2,5 +2,6 @@
 #include "foo.h"
 
 int foo(void) {
-  return 42;
+  unsigned int bar = -1;
+  return bar;
 }

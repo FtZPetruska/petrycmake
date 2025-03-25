@@ -17,4 +17,5 @@ add_test(
 set_tests_properties(test_compiler_warnings
   PROPERTIES
     LABELS PetryCompilerWarnings
+    PASS_REGULAR_EXPRESSION "(C4245|sign-conversion)"
 )

@@ -9,8 +9,3 @@ add_executable(my_program
 )
 
 petry_set_target_warnings(my_program)
-
-set_target_properties(my_program
-  PROPERTIES
-    COMPILE_WARNING_AS_ERROR TRUE
-)
