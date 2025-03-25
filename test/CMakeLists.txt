@@ -1,8 +1,19 @@
 # SPDX-License-Identifier: MIT
 
+set(TOOLCHAIN_ARGS)
+if(CMAKE_TOOLCHAIN_FILE)
+  set(TOOLCHAIN_ARGS "--toolchain" "${CMAKE_TOOLCHAIN_FILE}")
+endif()
+
 set(PETRYCMAKE_TEST_COMMON_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/common_test_root")
 set(PETRYCMAKE_TEST_COMMON_CONFIG_ARGS
   "-D" "petrycmake_DIR=${PROJECT_BINARY_DIR}"
+  "-D" "CMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+  "-D" "CMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+  ${TOOLCHAIN_ARGS}
+  "-Wdev"
+  "-Werror=dev"
+  "--warn-uninitialized"
   "--fresh"
 )
 
