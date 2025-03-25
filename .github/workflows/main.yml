@@ -8,12 +8,18 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     defaults:
       run:
-        shell: ${{ matrix.config.shell }}
+        shell: ${{ matrix.config.shell || 'bash' }}
     strategy:
       fail-fast: false
       matrix:
         config:
-          - { name: "MSVC", os: windows-latest, shell: bash }
+          - { name: "Windows - MSVC", os: windows-latest }
+          - {
+              name: "Windows - Clang-CL",
+              os: windows-latest,
+              toolchain: clang-cl
+            }
+          - { name: "Windows - Clang", os: windows-latest, toolchain: llvm }
           - {
               name: "MSYS2 UCRT64",
               os: windows-latest,
@@ -21,19 +27,22 @@ jobs:
               msystem: ucrt64,
               msys-env: mingw-w64-ucrt-x86_64
             }
-          - { name: "Linux", os: ubuntu-latest, shell: bash }
-          - { name: "macOS", os: macos-latest, shell: bash }
+          - { name: "Linux - GCC", os: ubuntu-latest, toolchain: gcc }
+          - { name: "Linux - LLVM", os: ubuntu-latest, toolchain: llvm }
+          - { name: "macOS - AppleClang", os: macos-latest }
+          - { name: "macOS - LLVM", os: macos-latest, toolchain: macos-llvm }
+          - { name: "macOS - GCC", os: macos-latest, toolchain: macos-gcc }
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Dependencies (MSVC)
-        if: matrix.config.name == 'MSVC'
+      - name: Install Dependencies (Windows)
+        if: ${{ contains(matrix.config.name, 'Windows') }}
         run: |
           choco install ninja
 
       - name: Install Dependencies (MSYS2)
-        if: matrix.config.shell == 'msys2 {0}'
+        if: ${{ matrix.config.shell == 'msys2 {0}' }}
         uses: msys2/setup-msys2@v2
         with:
           msystem: ${{ matrix.config.msystem }}
@@ -43,11 +52,12 @@ jobs:
             ${{ matrix.config.msys-env }}-ninja
 
       - name: Install Dependencies (Linux)
-        if: runner.os == 'Linux'
+        if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt-get update
           sudo apt-get upgrade -y
           sudo apt-get install -y \
+            clang \
             gcc \
             cmake \
             ninja-build
@@ -55,16 +65,23 @@ jobs:
       - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install ninja
+          brew install \
+            gcc \
+            llvm \
+            ninja
 
       - name: Configure
         run: |
           cmake \
             -S . \
             -B build \
-            -G Ninja \
-            -D CMAKE_BUILD_TYPE=Release \
-            -D CMAKE_INSTALL_PREFIX=${{ github.workspace }}/install-prefix
+            -G ${{ contains(matrix.config.name, 'MSVC') && 'Visual Studio 17 2022' || 'Ninja' }} \
+            -Wdev \
+            -Werror=dev \
+            --warn-uninitialized \
+            -D CMAKE_BUILD_TYPE:STRING=Release \
+            -D "CMAKE_INSTALL_PREFIX:PATH=${{ github.workspace }}/install-prefix" \
+            ${{ matrix.config.toolchain && format('--toolchain "{0}/.github/cmake-toolchains/{1}.cmake"', github.workspace, matrix.config.toolchain) || '' }}
 
       - name: Build
         run: cmake --build build --config Release --verbose
@@ -80,6 +97,10 @@ jobs:
           cmake \
             -S test/test_find_package \
             -B test_find_package_build \
-            -G Ninja \
-            -D CMAKE_BUILD_TYPE=Release \
-            -D CMAKE_PREFIX_PATH=${{ github.workspace}}/install-prefix
+            -G ${{ contains(matrix.config.name, 'MSVC') && 'Visual Studio 17 2022' || 'Ninja' }} \
+            -Wdev \
+            -Werror=dev \
+            --warn-uninitialized \
+            -D CMAKE_BUILD_TYPE:STRING=Release \
+            -D "CMAKE_PREFIX_PATH:PATH=${{ github.workspace}}/install-prefix" \
+            ${{ matrix.config.toolchain && format('--toolchain "{0}/.github/cmake-toolchains/{1}.cmake"', github.workspace, matrix.config.toolchain) || '' }}
