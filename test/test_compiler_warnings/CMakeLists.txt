@@ -18,4 +18,5 @@ set_tests_properties(test_compiler_warnings
   PROPERTIES
     LABELS PetryCompilerWarnings
     PASS_REGULAR_EXPRESSION "(C4245|sign-conversion)"
+    FAIL_REGULAR_EXPRESSION "(unknown option|warning: command-line option|unknown-warning-option)"
 )
