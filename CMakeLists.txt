@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.31)
 project(petrycmake
   VERSION 0.0.1
   DESCRIPTION "A collection of CMake Modules for C/C++ development"
-  LANGUAGES C
+  LANGUAGES C CXX
 )
 
 include(GNUInstallDirs)
