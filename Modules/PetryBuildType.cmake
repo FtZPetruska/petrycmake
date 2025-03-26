@@ -36,13 +36,7 @@ function(petry_internal_set_default_build_type_single CONFIGURATION)
 endfunction()
 
 function(petry_set_default_build_type CONFIGURATION)
-  list(FIND
-    PETRYCMAKE_INTERNAL_AVAILABLE_BUILD_CONFIGS
-    "${CONFIGURATION}"
-    CONFIGURATION_IDX
-  )
-
-  if(CONFIGURATION_IDX EQUAL -1)
+  if(NOT CONFIGURATION IN_LIST PETRYCMAKE_INTERNAL_AVAILABLE_BUILD_CONFIGS)
     message(FATAL_ERROR "The provided configuration \"${CONFIGURATION}\" does not exist.")
   endif()
 
