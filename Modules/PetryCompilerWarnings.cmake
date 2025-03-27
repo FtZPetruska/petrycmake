@@ -57,7 +57,13 @@ function(petry_internal_check_warnings)
       "-Wnon-virtual-dtor"
       "-Wold-style-cast"
       "-Woverloaded-virtual"
+      "-Wuseless-cast"
     )
+  endif()
+
+  if(CMAKE_C_COMPILER_ID STREQUAL "GNU" 
+    AND CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 14)
+    list(REMOVE_ITEM CXX_ONLY_WARNINGS "-Wuseless-cast")
   endif()
 
   include(CheckCXXCompilerFlag)
