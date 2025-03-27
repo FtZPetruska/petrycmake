@@ -75,7 +75,7 @@ jobs:
           cmake \
             -S . \
             -B build \
-            -G ${{ contains(matrix.config.name, 'MSVC') && 'Visual Studio 17 2022' || 'Ninja' }} \
+            -G "${{ contains(matrix.config.name, 'MSVC') && 'Visual Studio 17 2022' || 'Ninja' }}" \
             -Wdev \
             -Werror=dev \
             --warn-uninitialized \
@@ -97,7 +97,7 @@ jobs:
           cmake \
             -S test/test_find_package \
             -B test_find_package_build \
-            -G ${{ contains(matrix.config.name, 'MSVC') && 'Visual Studio 17 2022' || 'Ninja' }} \
+            -G "${{ contains(matrix.config.name, 'MSVC') && 'Visual Studio 17 2022' || 'Ninja' }}" \
             -Wdev \
             -Werror=dev \
             --warn-uninitialized \
