@@ -78,8 +78,10 @@ function(petry_set_target_sanitiser TARGET_NAME)
     PRIVATE
     ${PETRYCMAKE_INTERNAL_SANITISERS_LINK_OPTIONS}
   )
-  set_target_properties("${TARGET_NAME}"
-    PROPERTIES
-      MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>"
-  )
+  if(MSVC)
+    set_target_properties("${TARGET_NAME}"
+      PROPERTIES
+        MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>"
+    )
+  endif()
 endfunction()
