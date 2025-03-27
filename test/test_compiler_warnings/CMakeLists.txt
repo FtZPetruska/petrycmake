@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 add_test(
   NAME test_compiler_warnings

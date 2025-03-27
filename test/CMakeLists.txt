@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 set(TOOLCHAIN_ARGS)
 if(CMAKE_TOOLCHAIN_FILE)

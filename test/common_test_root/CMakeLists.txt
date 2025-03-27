@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 cmake_minimum_required(VERSION 3.31)
 project(petrycmake_common_test

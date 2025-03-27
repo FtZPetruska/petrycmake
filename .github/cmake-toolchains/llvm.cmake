@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 if(APPLE)
   message(FATAL_ERROR "Use the macos-* toolchains for Apple platforms")

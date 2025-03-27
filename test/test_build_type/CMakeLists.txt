@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 find_program(NINJA_EXECUTABLE
   NAMES ninja

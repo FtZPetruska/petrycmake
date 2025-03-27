@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 if(NOT DEFINED ENV{HOMEBREW_PREFIX})
   message(FATAL_ERROR "Homebrew shellenv must be set")

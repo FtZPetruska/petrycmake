@@ -1,4 +1,6 @@
 /* SPDX-License-Identifier: MIT */
+/* SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling */
+
 #ifndef FOO_H
 #define FOO_H
 

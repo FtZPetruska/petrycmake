@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: Copyright 2025 Pierre Wendling
 
 # TODO: Once ready for release, lower the version to the actual minimum requirement
 cmake_minimum_required(VERSION 3.31)
