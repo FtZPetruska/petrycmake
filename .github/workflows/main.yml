@@ -70,6 +70,10 @@ jobs:
             llvm \
             ninja
 
+      - name: Setup MSVC environment
+        if: ${{ contains(matrix.config.name, 'MSVC') }}
+        uses: ilammy/msvc-dev-cmd@v1.13.0
+
       - name: Configure
         run: |
           cmake \
