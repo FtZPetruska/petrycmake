@@ -52,3 +52,4 @@ endif()
 
 add_subdirectory(test_build_type)
 add_subdirectory(test_compiler_warnings)
+add_subdirectory(test_sanitiser)
