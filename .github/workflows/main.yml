@@ -87,7 +87,7 @@ jobs:
         run: cmake --build build --config Release --verbose
 
       - name: Run tests
-        run: ctest --test-dir build -C Release --parallel
+        run: ctest --test-dir build -C Release --parallel --output-on-failure
 
       - name: Install
         run: cmake --install build --config Release
